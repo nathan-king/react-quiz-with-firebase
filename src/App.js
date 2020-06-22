@@ -8,9 +8,11 @@ import HighScores from "./components/HighScores";
 function App() {
   return (
     <Router>
-      <Route exact path="/" component={Home} />
-      <Route path="/game" component={Game} />
-      <Route path="/highscores" component={HighScores} />
+      <div className="container">
+        <Route exact path="/" component={Home} />
+        <Route path="/game" component={Game} />
+        <Route path="/highscores" component={HighScores} />
+      </div>
     </Router>
   );
 }
