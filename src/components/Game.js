@@ -14,22 +14,39 @@ export default class Game extends Component {
   async componentDidMount() {
     try {
       const questions = await loadQuestions();
-      console.log(questions);
-
-      this.setState({
-        questions,
-        currentQuestion: questions[0],
-        loading: false,
-      });
+      this.setState(
+        {
+          questions,
+        },
+        () => {
+          this.changeQuestion();
+        }
+      );
     } catch (err) {
       console.error(err);
     }
   }
 
+  changeQuestion = () => {
+    const randomQuestionIndex = Math.floor(
+      Math.random() * this.state.questions.length
+    );
+    const currentQuestion = this.state.questions[randomQuestionIndex];
+    const remainingQuestions = this.state.questions.filter(
+      (_, index) => index !== randomQuestionIndex
+    );
+
+    this.setState({
+      questions: remainingQuestions,
+      currentQuestion,
+      loading: false,
+    });
+  };
+
   render() {
     return (
       <>
-        {this.state.loading && <div id="loader"></div>}
+        {this.state.loading && <div id="loader" />}
         {!this.state.loading && this.state.currentQuestion && (
           <Question question={this.state.currentQuestion} />
         )}
